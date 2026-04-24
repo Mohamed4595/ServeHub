@@ -1,70 +1,59 @@
-//
-//  DetailScreen.swift
-//  iosApp
-//
-//  Created by Patrick Ngoyi Dipumba on 21/02/2023.
-//  Copyright © 2023 orgName. All rights reserved.
-//
-
 import SwiftUI
-import shared
 
 struct DetailScreen: View {
-    let movie: Movie
-    
+    let restaurant: RestaurantPreview
+
     var body: some View {
-        ScrollView{
-            
-            VStack{
-                
-                ZStack{
-                    AsyncImage(url: URL(string: movie.imageUrl)){image in
-                        image.resizable().scaledToFill()
-                    }placeholder: {
-                        ProgressView()
-                    }
-                }
-                .frame(maxWidth: .infinity, minHeight: 300, maxHeight: 300)
-                
-                VStack(alignment:.leading, spacing: 12){
-                    Text(movie.title)
-                        .font(.title)
-                        .fontWeight(.bold)
-                        .fixedSize(horizontal: false, vertical: true)
-                        
-                    Button(action: {}){
-                        HStack{
-                            Image(systemName: "play.fill")
-                                .foregroundColor(.black)
-                            
-                            Text("Start watching now")
-                                .foregroundColor(.black)
+        ScrollView {
+            VStack(alignment: .leading, spacing: 20) {
+                RoundedRectangle(cornerRadius: 24)
+                    .fill(
+                        LinearGradient(
+                            colors: [.orange, .red.opacity(0.7)],
+                            startPoint: .topLeading,
+                            endPoint: .bottomTrailing
+                        )
+                    )
+                    .frame(height: 220)
+                    .overlay(
+                        Text(restaurant.emoji)
+                            .font(.system(size: 80))
+                    )
+
+                VStack(alignment: .leading, spacing: 12) {
+                    Text(restaurant.name)
+                        .font(.title.bold())
+                    Text("\(restaurant.cuisine) • 30-40 min")
+                        .foregroundColor(.secondary)
+
+                    Text("Popular Menu")
+                        .font(.headline)
+
+                    ForEach(restaurant.menu, id: \.self) { item in
+                        HStack {
+                            Text(item)
+                            Spacer()
+                            Text("+")
+                                .foregroundColor(.white)
+                                .frame(width: 28, height: 28)
+                                .background(Sample.accent)
+                                .clipShape(RoundedRectangle(cornerRadius: 8))
                         }
+                        .padding()
+                        .background(Color.white)
+                        .clipShape(RoundedRectangle(cornerRadius: 16))
+                        .shadow(color: .black.opacity(0.05), radius: 8, x: 0, y: 4)
                     }
-                    .frame(maxWidth: .infinity, maxHeight: 40)
-                    .padding()
-                    .background(.red)
-                    .clipShape(RoundedRectangle(cornerRadius: 8))
-                    
-                    Text("Released in \(movie.releaseDate)".uppercased())
-                    
-                    Text(movie.description_)
-                        .font(.body)
-                        .fixedSize(horizontal: false, vertical: true)
-                    
                 }
-                .padding(20)
-                .background(.black)
-                
             }
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
-            
+            .padding(20)
         }
+        .background(Color(.systemGroupedBackground))
     }
 }
 
 struct DetailScreen_Previews: PreviewProvider {
     static var previews: some View {
-        DetailScreen(movie: sampleMovie)
+        DetailScreen(restaurant: Sample.restaurants[0])
     }
 }

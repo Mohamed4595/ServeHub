@@ -1,53 +1,47 @@
-//
-//  MovieGridItem.swift
-//  iosApp
-//
-//  Created by Patrick Ngoyi Dipumba on 21/02/2023.
-//  Copyright © 2023 orgName. All rights reserved.
-//
-
 import SwiftUI
-import shared
 
 struct MovieGridItem: View {
-    let movie: Movie
-    
+    let restaurant: RestaurantPreview
+
     var body: some View {
-        VStack(alignment: .leading, spacing: 8){
-            ZStack{
-                
-                AsyncImage(url: URL(string: movie.imageUrl)){image in
-                    image.resizable()
-                }placeholder: {
-                    Color.gray
-                }
-                
-                Circle()
-                    .frame(width: 50, height: 50)
-                    .foregroundColor(.black.opacity(0.7))
-                
-                Image(systemName: "play.fill")
-                
+        HStack(spacing: 14) {
+            RoundedRectangle(cornerRadius: 18)
+                .fill(
+                    LinearGradient(
+                        colors: [.orange, .red.opacity(0.7)],
+                        startPoint: .topLeading,
+                        endPoint: .bottomTrailing
+                    )
+                )
+                .frame(width: 88, height: 88)
+                .overlay(
+                    Text(restaurant.emoji)
+                        .font(.system(size: 36))
+                )
+
+            VStack(alignment: .leading, spacing: 6) {
+                Text(restaurant.name)
+                    .font(.headline)
+                    .foregroundColor(.primary)
+                Text(restaurant.cuisine)
+                    .font(.subheadline)
+                    .foregroundColor(.secondary)
+                Text("★ 4.6 • 30-40 min")
+                    .font(.caption)
+                    .foregroundColor(.secondary)
             }
-            .frame(maxWidth: .infinity, idealHeight: .infinity)
-            .clipShape(RoundedRectangle(cornerRadius: 8))
-            
-            Text(movie.title)
-                .font(.title3)
-                .fontWeight(.bold)
-                .lineLimit(1)
-            
-            Text(movie.releaseDate)
-                .font(.caption)
-            
-            
+
+            Spacer()
         }
-        .frame(maxWidth: .infinity, maxHeight: 260)
+        .padding()
+        .background(Color.white)
+        .clipShape(RoundedRectangle(cornerRadius: 20))
+        .shadow(color: .black.opacity(0.06), radius: 8, x: 0, y: 4)
     }
 }
 
 struct MovieGridItem_Previews: PreviewProvider {
     static var previews: some View {
-        MovieGridItem(movie: sampleMovie)
+        MovieGridItem(restaurant: Sample.restaurants[0])
     }
 }
