@@ -35,7 +35,9 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.servehub.shared.Restaurant
@@ -187,7 +189,11 @@ internal fun MenuManagementScreen(
                                 Text("${item.price.toCurrency()} EGP", color = ServeHubMuted, fontSize = 12.sp)
                             }
                             IconButton(onClick = { onDeleteItem(item.id) }) {
-                                Icon(Icons.Default.Delete, contentDescription = null, tint = ServeHubPrimary)
+                                androidx.compose.foundation.Image(
+                                    painter = painterResource(id = R.drawable.icon_delete),
+                                    contentDescription = null,
+                                    modifier = Modifier.size(22.dp)
+                                )
                             }
                         }
                     }
@@ -305,4 +311,64 @@ private fun RestaurantMiniCard(
             StatusChip(trailing)
         }
     }
+}
+
+@PhonePreview
+@Composable
+private fun DashboardScreenPreview() = PreviewContainer {
+    DashboardScreen(
+        state = previewOwnerState,
+        ownedRestaurants = previewRestaurants.filter { it.ownerId == previewOwner.id },
+        onRestaurantClick = {},
+        onManageMenu = {},
+        onCreateRestaurant = {}
+    )
+}
+
+@PhonePreview
+@Composable
+private fun CreateRestaurantScreenPreview() = PreviewContainer {
+    CreateRestaurantScreen(onCreate = { _, _, _ -> })
+}
+
+@PhonePreview
+@Composable
+private fun MenuManagementScreenPreview() = PreviewContainer {
+    MenuManagementScreen(
+        restaurant = previewRestaurants.first(),
+        userRole = previewOwner.role,
+        onAddItem = {},
+        onDeleteItem = {}
+    )
+}
+
+@PhonePreview
+@Composable
+private fun AddMenuItemScreenPreview() = PreviewContainer {
+    AddMenuItemScreen(
+        restaurant = previewRestaurants.first(),
+        onAdd = { _, _ -> }
+    )
+}
+
+@Preview(showBackground = true, backgroundColor = 0xFFFFFFFF)
+@Composable
+private fun DashboardActionCardPreview() = PreviewContainer {
+    DashboardActionCard(
+        title = "Manage Menu",
+        subtitle = "Add, edit or remove menu items",
+        icon = Icons.Default.Menu,
+        background = Color(0xFFEFF9EB),
+        onClick = {}
+    )
+}
+
+@Preview(showBackground = true, backgroundColor = 0xFFFFFFFF)
+@Composable
+private fun RestaurantMiniCardPreview() = PreviewContainer {
+    RestaurantMiniCard(
+        restaurant = previewRestaurants.first(),
+        onClick = {},
+        trailing = "Active"
+    )
 }

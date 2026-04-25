@@ -57,8 +57,10 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -384,10 +386,9 @@ internal fun LogoBadge(size: Dp) {
             .background(Color.Transparent),
         contentAlignment = Alignment.Center
     ) {
-        Icon(
-            imageVector = Icons.Default.Storefront,
+        androidx.compose.foundation.Image(
+            painter = painterResource(id = R.drawable.logo_servehub),
             contentDescription = null,
-            tint = ServeHubPrimary,
             modifier = Modifier.size(size * 0.72f)
         )
     }
@@ -527,7 +528,11 @@ internal fun EmptyMenuState(title: String, subtitle: String) {
                 .padding(26.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text("\uD83D\uDECE️", fontSize = 48.sp)
+            androidx.compose.foundation.Image(
+                painter = painterResource(id = R.drawable.icon_empty_menu),
+                contentDescription = null,
+                modifier = Modifier.size(56.dp)
+            )
             Spacer(modifier = Modifier.height(12.dp))
             Text(title, color = ServeHubInk, fontWeight = androidx.compose.ui.text.font.FontWeight.Bold)
             Spacer(modifier = Modifier.height(8.dp))
@@ -596,3 +601,167 @@ internal fun menuDescription(itemName: String): String = when {
 internal fun Double.toCurrency(): String = String.format("%.0f", this)
 
 internal fun Double.toOneDecimal(): String = String.format("%.1f", this)
+
+@Preview(showBackground = true, backgroundColor = 0xFFFFFFFF)
+@Composable
+private fun ServeHubTopBarPreview() = PreviewContainer {
+    ServeHubTopBar(
+        screen = AppScreen.Home,
+        cartCount = 2,
+        onBack = {},
+        onCart = {}
+    )
+}
+
+@Preview(showBackground = true, backgroundColor = 0xFFFFFFFF)
+@Composable
+private fun CustomerBottomBarPreview() = PreviewContainer {
+    CustomerBottomBar()
+}
+
+@Preview(showBackground = true, backgroundColor = 0xFFFF6B1A, widthDp = 360)
+@Composable
+private fun DetailsCartBarPreview() = PreviewContainer {
+    DetailsCartBar(
+        totalItems = 3,
+        totalPrice = 320.0,
+        onCart = {}
+    )
+}
+
+@PhonePreview
+@Composable
+private fun ClearCartDialogPreview() = PreviewContainer {
+    ClearCartDialog(
+        onConfirm = {},
+        onDismiss = {}
+    )
+}
+
+@Preview(showBackground = true, backgroundColor = 0xFFF8F8F8)
+@Composable
+private fun SearchHeaderPreview() = PreviewContainer {
+    SearchHeader(search = "Pizza", onSearchChange = {})
+}
+
+@PhonePreview
+@Composable
+private fun FormLayoutPreview() = PreviewContainer {
+    FormLayout(title = "Preview Form") {
+        ImageUploadPlaceholder(text = "Upload Image\nJPG, PNG up to 5MB")
+        Spacer(modifier = Modifier.height(12.dp))
+        ServeHubTextField(value = "Preview", onValueChange = {}, label = "Label")
+        Spacer(modifier = Modifier.height(12.dp))
+        PrimaryActionButton(text = "Save", onClick = {})
+    }
+}
+
+@Preview(showBackground = true, backgroundColor = 0xFFFFFFFF)
+@Composable
+private fun ImageUploadPlaceholderPreview() = PreviewContainer {
+    ImageUploadPlaceholder(text = "Upload Image\nJPG, PNG up to 5MB")
+}
+
+@Preview(showBackground = true, backgroundColor = 0xFFFFFFFF)
+@Composable
+private fun ServeHubTextFieldPreview() = PreviewContainer {
+    ServeHubTextField(value = "Pizza Place", onValueChange = {}, label = "Restaurant")
+}
+
+@Preview(showBackground = true, backgroundColor = 0xFFFFFFFF)
+@Composable
+private fun PrimaryActionButtonPreview() = PreviewContainer {
+    PrimaryActionButton(text = "Continue", onClick = {})
+}
+
+@Preview(showBackground = true, backgroundColor = 0xFFFFFFFF)
+@Composable
+private fun OutlineActionButtonPreview() = PreviewContainer {
+    OutlineActionButton(text = "Outline", onClick = {})
+}
+
+@Preview(showBackground = true, backgroundColor = 0xFFFFFFFF)
+@Composable
+private fun PrimaryMiniButtonPreview() = PreviewContainer {
+    PrimaryMiniButton(text = "+ Add Item", onClick = {})
+}
+
+@Preview(showBackground = true, backgroundColor = 0xFFFFFFFF)
+@Composable
+private fun OrDividerPreview() = PreviewContainer {
+    OrDivider()
+}
+
+@Preview(showBackground = true, backgroundColor = 0xFFFFFFFF)
+@Composable
+private fun LogoBadgePreview() = PreviewContainer {
+    LogoBadge(size = 88.dp)
+}
+
+@Preview(showBackground = true, backgroundColor = 0xFFFFFFFF)
+@Composable
+private fun ServeHubWordmarkPreview() = PreviewContainer {
+    ServeHubWordmark()
+}
+
+@Preview(showBackground = true, backgroundColor = 0xFFFFFFFF)
+@Composable
+private fun FoodThumbnailPreview() = PreviewContainer {
+    FoodThumbnail(label = "Pizza Place", size = 88.dp)
+}
+
+@Preview(showBackground = true, backgroundColor = 0xFFFFFFFF)
+@Composable
+private fun StepperPreview() = PreviewContainer {
+    Stepper(quantity = 2, onMinus = {}, onPlus = {})
+}
+
+@Preview(showBackground = true, backgroundColor = 0xFFFFFFFF)
+@Composable
+private fun StatusChipPreview() = PreviewContainer {
+    StatusChip("Active")
+}
+
+@Preview(showBackground = true, backgroundColor = 0xFFFFFFFF)
+@Composable
+private fun NotificationActionPreview() = PreviewContainer {
+    NotificationAction()
+}
+
+@Preview(showBackground = true, backgroundColor = 0xFFFFFFFF)
+@Composable
+private fun FavoriteActionPreview() = PreviewContainer {
+    FavoriteAction()
+}
+
+@Preview(showBackground = true, backgroundColor = 0xFFFFFFFF)
+@Composable
+private fun BottomNavItemPreview() = PreviewContainer {
+    BottomNavItem(
+        icon = Icons.Default.Home,
+        label = "Home",
+        selected = true,
+        badge = "2"
+    )
+}
+
+@Preview(showBackground = true, backgroundColor = 0xFFFFFFFF)
+@Composable
+private fun StepperButtonPreview() = PreviewContainer {
+    StepperButton(text = "+", onClick = {})
+}
+
+@Preview(showBackground = true, backgroundColor = 0xFFFFFFFF)
+@Composable
+private fun EmptyMenuStatePreview() = PreviewContainer {
+    EmptyMenuState(
+        title = "No menu items yet",
+        subtitle = "Start by adding your first item to the menu."
+    )
+}
+
+@Preview(showBackground = true, backgroundColor = 0xFFF8F8F8)
+@Composable
+private fun EmptyCenteredStatePreview() = PreviewContainer {
+    EmptyCenteredState("Restaurant not found")
+}
