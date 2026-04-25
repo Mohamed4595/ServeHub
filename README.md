@@ -173,3 +173,8 @@ The project is built incrementally:
 ## ✨ Vision
 
 **ServeHub aims to simplify how restaurants present their menus and how customers interact with them — all in one seamless mobile experience.**
+## Kotlin Multiplatform Architecture (Android + iOS)
+
+- The project uses Kotlin Multiplatform to share code between Android and iOS.
+- Shared code resides in /composeApp with commonMain, androidMain, and iosMain source sets, while /iosApp hosts the iOS app entry point (SwiftUI/Swift).
+- Android-specific code continues to live under the androidMain source set of the shared module, and resource/manifest concerns are aligned accordingly.

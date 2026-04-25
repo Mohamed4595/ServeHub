@@ -1,8 +1,11 @@
+rootProject.name = "ServeHub"
+enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
+
 pluginManagement {
     repositories {
         google()
-        gradlePluginPortal()
         mavenCentral()
+        gradlePluginPortal()
     }
 }
 
@@ -13,6 +16,4 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "ServeHub"
-include(":androidApp")
-include(":shared")
+include(":composeApp")
