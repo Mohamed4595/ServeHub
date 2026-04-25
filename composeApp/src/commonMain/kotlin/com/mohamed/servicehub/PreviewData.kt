@@ -1,6 +1,14 @@
 package com.mohamed.servicehub
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
+import com.mohamed.servicehub.presentation.CartLineItem
+import com.mohamed.servicehub.presentation.CartState
+import com.mohamed.servicehub.presentation.MenuItem
+import com.mohamed.servicehub.presentation.Restaurant
+import com.mohamed.servicehub.presentation.RootUiState
+import com.mohamed.servicehub.presentation.UserRole
+import com.mohamed.servicehub.presentation.UserSession
+import com.mohamed.servicehub.presentation.theme.ServeHubTheme
 
 // Note: External shared types have been consolidated into internal models.
 

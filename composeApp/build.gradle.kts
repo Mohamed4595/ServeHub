@@ -6,13 +6,13 @@ plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
-    // Removed Google Services plugin for a runnable baseline in this environment
+    id("com.google.gms.google-services")
 }
 
 kotlin {
     androidTarget {
         compilerOptions {
-            jvmTarget.set(JvmTarget.JVM_11)
+            jvmTarget.set(JvmTarget.JVM_17)
         }
     }
     
@@ -30,23 +30,25 @@ kotlin {
         androidMain.dependencies {
             implementation(libs.compose.uiToolingPreview)
             implementation(libs.androidx.activity.compose)
-            // replace version catalog aliases with explicit coordinates for reliability
-            implementation("io.insert-koin:koin-core:3.4.0")
-            implementation("io.insert-koin:koin-android:3.4.0")
-            implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
-            implementation("com.google.firebase:firebase-bom:32.0.0")
-            implementation("com.google.firebase:firebase-auth-ktx:21.1.0")
-            implementation("com.google.firebase:firebase-firestore-ktx:24.0.0")
+            implementation(libs.koin.android)
         }
         commonMain.dependencies {
             implementation(libs.compose.runtime)
             implementation(libs.compose.foundation)
+            implementation(libs.compose.material)
+            implementation(libs.compose.material.icons)
+            implementation(libs.compose.material.icons.extended)
             implementation(libs.compose.material3)
             implementation(libs.compose.ui)
             implementation(libs.compose.components.resources)
             implementation(libs.compose.uiToolingPreview)
             implementation(libs.androidx.lifecycle.viewmodelCompose)
             implementation(libs.androidx.lifecycle.runtimeCompose)
+            implementation(libs.firebase.firestore)
+            implementation(libs.firebase.auth)
+            implementation(libs.koin.core)
+            implementation(libs.koin.compose)
+            implementation(libs.koin.compose.viewmodel)
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
@@ -76,18 +78,11 @@ kotlin {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
 }
 
 dependencies {
     debugImplementation(libs.compose.uiTooling)
-    // Core Android+Kotlin Multiplatform dependencies (single-module consolidation)
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
-    implementation("io.insert-koin:koin-core:3.4.0")
-    implementation("io.insert-koin:koin-android:3.4.0")
-    implementation("com.google.firebase:firebase-bom:32.0.0")
-    implementation("com.google.firebase:firebase-auth-ktx:21.1.0")
-    implementation("com.google.firebase:firebase-firestore-ktx:24.0.0")
 }
