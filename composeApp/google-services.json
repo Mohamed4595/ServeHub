@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "40311530225",
+    "project_id": "servehub-a35a0",
+    "storage_bucket": "servehub-a35a0.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:40311530225:android:6665b70b61868e08e93f50",
+        "android_client_info": {
+          "package_name": "com.mohamed.servicehub"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCyN0Bz__5kU3D1wrhYYUu7N8InJAQSlcI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
