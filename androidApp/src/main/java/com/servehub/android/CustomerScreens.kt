@@ -38,8 +38,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.servehub.shared.MenuItem
@@ -110,7 +112,15 @@ internal fun DetailsScreen(
                         fontSize = 13.sp
                     )
                 }
-                Text("★ 4.5 (120)", color = ServeHubGold, fontWeight = FontWeight.SemiBold, fontSize = 13.sp)
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    androidx.compose.foundation.Image(
+                        painter = painterResource(id = R.drawable.icon_star),
+                        contentDescription = null,
+                        modifier = Modifier.size(16.dp)
+                    )
+                    Spacer(modifier = Modifier.width(4.dp))
+                    Text("4.5 (120)", color = ServeHubGold, fontWeight = FontWeight.SemiBold, fontSize = 13.sp)
+                }
             }
             Spacer(modifier = Modifier.height(18.dp))
             TabRowLike()
@@ -188,7 +198,11 @@ internal fun CartScreen(
                 shape = RoundedCornerShape(14.dp),
                 colors = ButtonDefaults.buttonColors(backgroundColor = ServeHubAccent)
             ) {
-                Icon(Icons.Default.Call, contentDescription = null, tint = Color.White)
+                androidx.compose.foundation.Image(
+                    painter = painterResource(id = R.drawable.icon_call),
+                    contentDescription = null,
+                    modifier = Modifier.size(20.dp)
+                )
                 Spacer(modifier = Modifier.width(8.dp))
                 Text("Call Restaurant", color = Color.White, fontWeight = FontWeight.Bold)
             }
@@ -217,7 +231,15 @@ private fun PopularRestaurantCard(
                 Spacer(modifier = Modifier.height(4.dp))
                 Text(restaurant.cuisine, color = ServeHubMuted, fontSize = 12.sp)
                 Spacer(modifier = Modifier.height(8.dp))
-                Text("★ ${(4.1 + restaurant.menu.size * 0.1).toOneDecimal()}   30-40 min", color = ServeHubMuted, fontSize = 12.sp)
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    androidx.compose.foundation.Image(
+                        painter = painterResource(id = R.drawable.icon_star),
+                        contentDescription = null,
+                        modifier = Modifier.size(14.dp)
+                    )
+                    Spacer(modifier = Modifier.width(4.dp))
+                    Text("${(4.1 + restaurant.menu.size * 0.1).toOneDecimal()}   30-40 min", color = ServeHubMuted, fontSize = 12.sp)
+                }
             }
         }
     }
@@ -250,11 +272,15 @@ private fun MenuItemCard(item: MenuItem, onAdd: () -> Unit) {
                 modifier = Modifier
                     .size(34.dp)
                     .clip(RoundedCornerShape(8.dp))
-                    .background(ServeHubAccent)
+                    .background(Color.White)
                     .clickable(onClick = onAdd),
                 contentAlignment = Alignment.Center
             ) {
-                Text("+", color = Color.White, fontWeight = FontWeight.Bold)
+                androidx.compose.foundation.Image(
+                    painter = painterResource(id = R.drawable.icon_add),
+                    contentDescription = null,
+                    modifier = Modifier.size(24.dp)
+                )
             }
         }
     }
@@ -349,4 +375,82 @@ private fun TabRowLike() {
                 .background(ServeHubPrimary, RoundedCornerShape(10.dp))
         )
     }
+}
+
+@PhonePreview
+@Composable
+private fun HomeScreenPreview() = PreviewContainer {
+    HomeScreen(
+        restaurants = previewRestaurants,
+        onRestaurantClick = {}
+    )
+}
+
+@PhonePreview
+@Composable
+private fun DetailsScreenPreview() = PreviewContainer {
+    DetailsScreen(
+        restaurant = previewRestaurants.first(),
+        cartState = previewCustomerState,
+        onAddToCart = {}
+    )
+}
+
+@PhonePreview
+@Composable
+private fun CartScreenPreview() = PreviewContainer {
+    CartScreen(
+        state = previewCustomerState,
+        restaurants = previewRestaurants,
+        onQuantityChange = { _, _ -> },
+        onCall = {}
+    )
+}
+
+@Preview(showBackground = true, backgroundColor = 0xFFF8F8F8)
+@Composable
+private fun PopularRestaurantCardPreview() = PreviewContainer {
+    PopularRestaurantCard(
+        restaurant = previewRestaurants.first(),
+        onClick = {}
+    )
+}
+
+@Preview(showBackground = true, backgroundColor = 0xFFFFFFFF)
+@Composable
+private fun MenuItemCardPreview() = PreviewContainer {
+    MenuItemCard(
+        item = previewMenuItems.first(),
+        onAdd = {}
+    )
+}
+
+@Preview(showBackground = true, backgroundColor = 0xFFFFFFFF, widthDp = 360, heightDp = 220)
+@Composable
+private fun RestaurantHeroPreview() = PreviewContainer {
+    RestaurantHero(restaurant = previewRestaurants.first())
+}
+
+@Preview(showBackground = true, backgroundColor = 0xFFFFFFFF)
+@Composable
+private fun SourceRestaurantBannerPreview() = PreviewContainer {
+    SourceRestaurantBanner(restaurantName = previewRestaurants.first().name)
+}
+
+@Preview(showBackground = true, backgroundColor = 0xFFFFFFFF)
+@Composable
+private fun CartItemCardPreview() = PreviewContainer {
+    CartItemCard(
+        itemName = previewMenuItems.first().name,
+        itemPrice = previewMenuItems.first().price,
+        quantity = 2,
+        onMinus = {},
+        onPlus = {}
+    )
+}
+
+@Preview(showBackground = true, backgroundColor = 0xFFFFFFFF)
+@Composable
+private fun TabRowLikePreview() = PreviewContainer {
+    TabRowLike()
 }

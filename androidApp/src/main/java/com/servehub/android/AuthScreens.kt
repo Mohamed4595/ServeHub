@@ -19,10 +19,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import kotlinx.coroutines.delay
@@ -37,13 +39,14 @@ internal fun SplashScreen(onFinished: () -> Unit) {
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(
-                brush = Brush.verticalGradient(
-                    colors = listOf(Color.White, Color(0xFFFFF6F0))
-                )
-            )
+            .background(Color.White)
     ) {
-        FoodPatternBackground()
+        androidx.compose.foundation.Image(
+            painter = painterResource(id = R.drawable.splash_background),
+            contentDescription = null,
+            modifier = Modifier.fillMaxSize(),
+            contentScale = ContentScale.Crop
+        )
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -138,24 +141,36 @@ internal fun LoginScreen(
     }
 }
 
+@PhonePreview
 @Composable
-private fun FoodPatternBackground() {
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(24.dp),
-        verticalArrangement = Arrangement.SpaceBetween
-    ) {
-        repeat(6) {
-            androidx.compose.foundation.layout.Row(horizontalArrangement = Arrangement.SpaceBetween, modifier = Modifier.fillMaxWidth()) {
-                repeat(4) {
-                    Text(
-                        text = listOf("🍔", "🍕", "🍜", "🍣", "🌮", "🥗", "🍟", "🥐")[(it + 2) % 8],
-                        color = ServeHubPrimary.copy(alpha = 0.18f),
-                        fontSize = 22.sp
-                    )
-                }
-            }
-        }
-    }
+private fun SplashScreenPreview() = PreviewContainer {
+    SplashScreen(onFinished = {})
+}
+
+@PhonePreview
+@Composable
+private fun LoginScreenPreview() = PreviewContainer {
+    LoginScreen(
+        email = "owner@servehub.app",
+        password = "123456",
+        isLoading = false,
+        errorMessage = null,
+        onEmailChange = {},
+        onPasswordChange = {},
+        onLogin = {}
+    )
+}
+
+@PhonePreview
+@Composable
+private fun LoginScreenErrorPreview() = PreviewContainer {
+    LoginScreen(
+        email = "",
+        password = "",
+        isLoading = false,
+        errorMessage = "Please enter both email and password",
+        onEmailChange = {},
+        onPasswordChange = {},
+        onLogin = {}
+    )
 }
