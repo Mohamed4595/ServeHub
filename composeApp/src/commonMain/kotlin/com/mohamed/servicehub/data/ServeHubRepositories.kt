@@ -12,22 +12,28 @@ import kotlinx.coroutines.sync.withLock
 
 
 class FakeAuthRepository : AuthRepository {
-    override suspend fun login(email: String, password: String): Result<UserSession> {
-        delay(600)
-        if (email.isBlank() || password.isBlank()) {
-            return Result.failure(IllegalArgumentException("Email and password are required"))
+    override suspend fun sendOtp(phoneNumber: String): Result<String> {
+        delay(1000)
+        return if (phoneNumber.length >= 10) {
+            Result.success("fake-verification-id")
+        } else {
+            Result.failure(Exception("Invalid phone number"))
         }
+    }
 
-        val normalizedEmail = email.trim().lowercase()
-        val role = if ("owner" in normalizedEmail) UserRole.OWNER else UserRole.CUSTOMER
-
-        return Result.success(
-            UserSession(
-                id = normalizedEmail,
-                email = normalizedEmail,
-                role = role
+    override suspend fun verifyOtp(verificationId: String, otp: String): Result<UserSession> {
+        delay(1000)
+        return if (otp == "123456") {
+            Result.success(
+                UserSession(
+                    id = "fake-user-id",
+                    phoneNumber = "+1234567890",
+                    role = UserRole.CUSTOMER
+                )
             )
-        )
+        } else {
+            Result.failure(Exception("Invalid OTP"))
+        }
     }
 }
 
@@ -83,7 +89,7 @@ class InMemoryRestaurantRepository : RestaurantRepository {
         cuisine: String,
         phoneNumber: String
     ): Restaurant = mutex.withLock {
-        require(owner.role == UserRole.OWNER) { "Only owners can create restaurants" }
+        require(owner.role == UserRole.STAFF) { "Only owners can create restaurants" }
 
         val restaurant = Restaurant(
             id = "rest-${restaurants.size + 1}",
@@ -91,7 +97,7 @@ class InMemoryRestaurantRepository : RestaurantRepository {
             cuisine = cuisine.trim(),
             phoneNumber = phoneNumber.trim(),
             ownerId = owner.id,
-            ownerEmail = owner.email,
+            ownerEmail = owner.email ?: "",
             menu = emptyList()
         )
         restaurants += restaurant
@@ -107,7 +113,7 @@ class InMemoryRestaurantRepository : RestaurantRepository {
         val index = restaurants.indexOfFirst { it.id == restaurantId }
         require(index >= 0) { "Restaurant not found" }
         val restaurant = restaurants[index]
-        require(owner.role == UserRole.OWNER && restaurant.ownerId == owner.id) {
+        require(owner.role == UserRole.STAFF && restaurant.ownerId == owner.id) {
             "Only the restaurant owner can modify the menu"
         }
 
@@ -129,7 +135,7 @@ class InMemoryRestaurantRepository : RestaurantRepository {
         val index = restaurants.indexOfFirst { it.id == restaurantId }
         require(index >= 0) { "Restaurant not found" }
         val restaurant = restaurants[index]
-        require(owner.role == UserRole.OWNER && restaurant.ownerId == owner.id) {
+        require(owner.role == UserRole.STAFF && restaurant.ownerId == owner.id) {
             "Only the restaurant owner can modify the menu"
         }
 

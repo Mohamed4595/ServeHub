@@ -75,7 +75,7 @@ internal fun DashboardScreen(
         )
         Spacer(modifier = Modifier.height(14.dp))
         // Show create restaurant option only for owners
-        if (state.currentUser?.role == UserRole.OWNER) {
+        if (state.currentUser?.role == UserRole.STAFF) {
             PrimaryActionButton(text = "Create Restaurant", onClick = onCreateRestaurant)
         }
         Spacer(modifier = Modifier.height(22.dp))

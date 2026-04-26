@@ -50,7 +50,7 @@ internal fun MenuManagementScreen(
     onAddItem: () -> Unit,
     onDeleteItem: (String) -> Unit
 ) {
-    if (restaurant == null || userRole != UserRole.OWNER) {
+    if (restaurant == null || userRole != UserRole.STAFF) {
         EmptyCenteredState("You do not have permission to manage this menu.")
         return
     }

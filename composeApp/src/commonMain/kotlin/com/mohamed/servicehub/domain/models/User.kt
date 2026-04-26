@@ -8,5 +8,5 @@ data class User(
 
 enum class UserRole {
     CUSTOMER,
-    OWNER
+    STAFF
 }

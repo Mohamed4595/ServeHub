@@ -1,12 +1,14 @@
 package com.mohamed.servicehub.presentation
 enum class UserRole {
     CUSTOMER,
-    OWNER
+    STAFF,
+    ADMIN
 }
 
 data class UserSession(
     val id: String,
-    val email: String,
+    val email: String? = null,
+    val phoneNumber: String? = null,
     val role: UserRole
 )
 

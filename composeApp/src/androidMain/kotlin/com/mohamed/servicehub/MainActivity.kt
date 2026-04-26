@@ -9,12 +9,22 @@ import androidx.compose.ui.tooling.preview.Preview
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
+        instance = this
         enableEdgeToEdge()
         super.onCreate(savedInstanceState)
 
         setContent {
             App()
         }
+    }
+
+    override fun onDestroy() {
+        if (instance == this) instance = null
+        super.onDestroy()
+    }
+
+    companion object {
+        var instance: ComponentActivity? = null
     }
 }
 

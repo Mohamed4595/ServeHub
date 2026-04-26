@@ -133,6 +133,10 @@ class ServeHubViewModel(
         _screen.value = AppScreen.AddMenuItem(restaurantId)
     }
 
+    fun setCurrentUser(user: UserSession?) {
+        _uiState.update { it.copy(currentUser = user) }
+    }
+
     fun createRestaurant(name: String, cuisine: String, phoneNumber: String) {
         val user = _uiState.value.currentUser ?: return
         viewModelScope.launch {

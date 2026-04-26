@@ -61,7 +61,7 @@ internal val previewCustomer = UserSession(
 internal val previewOwner = UserSession(
     id = "owner@servehub.app",
     email = "owner@servehub.app",
-    role = UserRole.OWNER
+    role = UserRole.STAFF
 )
 
 internal val previewCartItems = listOf(

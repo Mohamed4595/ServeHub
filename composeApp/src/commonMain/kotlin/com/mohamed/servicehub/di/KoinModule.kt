@@ -7,6 +7,8 @@ import com.mohamed.servicehub.data.FirebaseAuthRepository
 import com.mohamed.servicehub.data.FirebaseRestaurantRepository
 import com.mohamed.servicehub.domain.repo.RestaurantRepository
 import com.mohamed.servicehub.domain.repo.UserFirestoreRepository
+import com.mohamed.servicehub.data.PhoneAuthHelper
+import com.mohamed.servicehub.presentation.auth.PhoneAuthViewModel
 import dev.gitlive.firebase.Firebase
 import dev.gitlive.firebase.auth.auth
 import dev.gitlive.firebase.firestore.firestore
@@ -22,9 +24,11 @@ val appModule = module {
 
     // Repositories
     singleOf(::InMemoryUserFirestoreRepository) bind UserFirestoreRepository::class
+    single { PhoneAuthHelper(get()) }
     singleOf(::FirebaseAuthRepository) bind AuthRepository::class
     singleOf(::FirebaseRestaurantRepository) bind RestaurantRepository::class
 
     // ViewModel
     viewModelOf(::ServeHubViewModel)
+    viewModelOf(::PhoneAuthViewModel)
 }

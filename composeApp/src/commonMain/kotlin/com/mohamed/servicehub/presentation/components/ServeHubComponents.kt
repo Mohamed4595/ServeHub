@@ -63,6 +63,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.mohamed.servicehub.PhonePreview
+import com.mohamed.servicehub.PreviewContainer
+import com.mohamed.servicehub.format
 import com.mohamed.servicehub.presentation.AppScreen
 import org.jetbrains.compose.resources.painterResource
 import servehub.composeapp.generated.resources.Res
@@ -601,13 +604,13 @@ internal fun menuDescription(itemName: String): String = when {
     else -> "Chef-made favorite with bold flavor"
 }
 
-internal fun Double.toCurrency(): String = String.format("%.0f", this)
+internal fun Double.toCurrency(): String = this.format(0)
 
-internal fun Double.toOneDecimal(): String = String.format("%.1f", this)
+internal fun Double.toOneDecimal(): String = this.format(1)
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFFFF)
 @Composable
-private fun ServeHubTopBarPreview() = _root_ide_package_.com.mohamed.servicehub.PreviewContainer {
+private fun ServeHubTopBarPreview() = PreviewContainer {
     ServeHubTopBar(
         screen = AppScreen.Home,
         cartCount = 2,
@@ -619,13 +622,13 @@ private fun ServeHubTopBarPreview() = _root_ide_package_.com.mohamed.servicehub.
 @Preview(showBackground = true, backgroundColor = 0xFFFFFFFF)
 @Composable
 private fun CustomerBottomBarPreview() =
-    _root_ide_package_.com.mohamed.servicehub.PreviewContainer {
+    PreviewContainer {
         CustomerBottomBar()
     }
 
 @Preview(showBackground = true, backgroundColor = 0xFFFF6B1A, widthDp = 360)
 @Composable
-private fun DetailsCartBarPreview() = _root_ide_package_.com.mohamed.servicehub.PreviewContainer {
+private fun DetailsCartBarPreview() = PreviewContainer {
     DetailsCartBar(
         totalItems = 3,
         totalPrice = 320.0,
@@ -633,9 +636,9 @@ private fun DetailsCartBarPreview() = _root_ide_package_.com.mohamed.servicehub.
     )
 }
 
-@com.mohamed.servicehub.PhonePreview
+@PhonePreview
 @Composable
-private fun ClearCartDialogPreview() = _root_ide_package_.com.mohamed.servicehub.PreviewContainer {
+private fun ClearCartDialogPreview() = PreviewContainer {
     ClearCartDialog(
         onConfirm = {},
         onDismiss = {}
@@ -644,13 +647,13 @@ private fun ClearCartDialogPreview() = _root_ide_package_.com.mohamed.servicehub
 
 @Preview(showBackground = true, backgroundColor = 0xFFF8F8F8)
 @Composable
-private fun SearchHeaderPreview() = _root_ide_package_.com.mohamed.servicehub.PreviewContainer {
+private fun SearchHeaderPreview() = PreviewContainer {
     SearchHeader(search = "Pizza", onSearchChange = {})
 }
 
-@com.mohamed.servicehub.PhonePreview
+@PhonePreview
 @Composable
-private fun FormLayoutPreview() = _root_ide_package_.com.mohamed.servicehub.PreviewContainer {
+private fun FormLayoutPreview() = PreviewContainer {
     FormLayout(title = "Preview Form") {
         ImageUploadPlaceholder(text = "Upload Image\nJPG, PNG up to 5MB")
         Spacer(modifier = Modifier.height(12.dp))
@@ -663,90 +666,90 @@ private fun FormLayoutPreview() = _root_ide_package_.com.mohamed.servicehub.Prev
 @Preview(showBackground = true, backgroundColor = 0xFFFFFFFF)
 @Composable
 private fun ImageUploadPlaceholderPreview() =
-    _root_ide_package_.com.mohamed.servicehub.PreviewContainer {
+    PreviewContainer {
         ImageUploadPlaceholder(text = "Upload Image\nJPG, PNG up to 5MB")
     }
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFFFF)
 @Composable
 private fun ServeHubTextFieldPreview() =
-    _root_ide_package_.com.mohamed.servicehub.PreviewContainer {
+    PreviewContainer {
         ServeHubTextField(value = "Pizza Place", onValueChange = {}, label = "Restaurant")
     }
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFFFF)
 @Composable
 private fun PrimaryActionButtonPreview() =
-    _root_ide_package_.com.mohamed.servicehub.PreviewContainer {
+    PreviewContainer {
         PrimaryActionButton(text = "Continue", onClick = {})
     }
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFFFF)
 @Composable
 private fun OutlineActionButtonPreview() =
-    _root_ide_package_.com.mohamed.servicehub.PreviewContainer {
+    PreviewContainer {
         OutlineActionButton(text = "Outline", onClick = {})
     }
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFFFF)
 @Composable
 private fun PrimaryMiniButtonPreview() =
-    _root_ide_package_.com.mohamed.servicehub.PreviewContainer {
+    PreviewContainer {
         PrimaryMiniButton(text = "+ Add Item", onClick = {})
     }
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFFFF)
 @Composable
-private fun OrDividerPreview() = _root_ide_package_.com.mohamed.servicehub.PreviewContainer {
+private fun OrDividerPreview() = PreviewContainer {
     OrDivider()
 }
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFFFF)
 @Composable
-private fun LogoBadgePreview() = _root_ide_package_.com.mohamed.servicehub.PreviewContainer {
+private fun LogoBadgePreview() = PreviewContainer {
     LogoBadge(size = 88.dp)
 }
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFFFF)
 @Composable
-private fun ServeHubWordmarkPreview() = _root_ide_package_.com.mohamed.servicehub.PreviewContainer {
+private fun ServeHubWordmarkPreview() = PreviewContainer {
     ServeHubWordmark()
 }
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFFFF)
 @Composable
-private fun FoodThumbnailPreview() = _root_ide_package_.com.mohamed.servicehub.PreviewContainer {
+private fun FoodThumbnailPreview() = PreviewContainer {
     FoodThumbnail(label = "Pizza Place", size = 88.dp)
 }
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFFFF)
 @Composable
-private fun StepperPreview() = _root_ide_package_.com.mohamed.servicehub.PreviewContainer {
+private fun StepperPreview() = PreviewContainer {
     Stepper(quantity = 2, onMinus = {}, onPlus = {})
 }
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFFFF)
 @Composable
-private fun StatusChipPreview() = _root_ide_package_.com.mohamed.servicehub.PreviewContainer {
+private fun StatusChipPreview() = PreviewContainer {
     StatusChip("Active")
 }
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFFFF)
 @Composable
 private fun NotificationActionPreview() =
-    _root_ide_package_.com.mohamed.servicehub.PreviewContainer {
+    PreviewContainer {
         NotificationAction()
     }
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFFFF)
 @Composable
-private fun FavoriteActionPreview() = _root_ide_package_.com.mohamed.servicehub.PreviewContainer {
+private fun FavoriteActionPreview() = PreviewContainer {
     FavoriteAction()
 }
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFFFF)
 @Composable
-private fun BottomNavItemPreview() = _root_ide_package_.com.mohamed.servicehub.PreviewContainer {
+private fun BottomNavItemPreview() = PreviewContainer {
     BottomNavItem(
         icon = Icons.Default.Home,
         label = "Home",
@@ -757,13 +760,13 @@ private fun BottomNavItemPreview() = _root_ide_package_.com.mohamed.servicehub.P
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFFFF)
 @Composable
-private fun StepperButtonPreview() = _root_ide_package_.com.mohamed.servicehub.PreviewContainer {
+private fun StepperButtonPreview() = PreviewContainer {
     StepperButton(text = "+", onClick = {})
 }
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFFFF)
 @Composable
-private fun EmptyMenuStatePreview() = _root_ide_package_.com.mohamed.servicehub.PreviewContainer {
+private fun EmptyMenuStatePreview() = PreviewContainer {
     EmptyMenuState(
         title = "No menu items yet",
         subtitle = "Start by adding your first item to the menu."
@@ -773,6 +776,6 @@ private fun EmptyMenuStatePreview() = _root_ide_package_.com.mohamed.servicehub.
 @Preview(showBackground = true, backgroundColor = 0xFFF8F8F8)
 @Composable
 private fun EmptyCenteredStatePreview() =
-    _root_ide_package_.com.mohamed.servicehub.PreviewContainer {
+    PreviewContainer {
         EmptyCenteredState("Restaurant not found")
     }

@@ -8,10 +8,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import com.mohamed.servicehub.presentation.auth.PhoneAuthIntent
+import com.mohamed.servicehub.presentation.auth.PhoneAuthScreen
+import com.mohamed.servicehub.presentation.auth.PhoneAuthViewModel
 import com.mohamed.servicehub.presentation.components.ClearCartDialog
 import com.mohamed.servicehub.presentation.components.CustomerBottomBar
 import com.mohamed.servicehub.presentation.components.DetailsCartBar
-import com.mohamed.servicehub.presentation.loginScreen.LoginScreen
 import com.mohamed.servicehub.presentation.components.ServeHubBackground
 import com.mohamed.servicehub.presentation.components.ServeHubTopBar
 import com.mohamed.servicehub.presentation.customerScreens.cartScreen.CartScreen
@@ -22,12 +24,12 @@ import com.mohamed.servicehub.presentation.ownerScreens.createRestaurantScreen.C
 import com.mohamed.servicehub.presentation.ownerScreens.dashboardScreen.DashboardScreen
 import com.mohamed.servicehub.presentation.ownerScreens.menuManagementScreen.MenuManagementScreen
 import com.mohamed.servicehub.presentation.splashScreen.SplashScreen
-
 import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
 fun ServeHubApp(
-    viewModel: ServeHubViewModel = koinViewModel()
+    viewModel: ServeHubViewModel = koinViewModel(),
+    phoneAuthViewModel: PhoneAuthViewModel = koinViewModel()
 ) {
     val screen by viewModel.screen.collectAsState()
     val uiState by viewModel.uiState.collectAsState()
@@ -40,7 +42,6 @@ fun ServeHubApp(
     }
 
     Scaffold(
-        // backgroundColor = ServeHubBackground,
         topBar = {
             if (screen != AppScreen.Splash) {
                 ServeHubTopBar(
@@ -63,7 +64,6 @@ fun ServeHubApp(
                         )
                     }
                 }
-
                 else -> Unit
             }
         }
@@ -76,27 +76,22 @@ fun ServeHubApp(
         ) {
             when (val currentScreen = screen) {
                 AppScreen.Splash -> SplashScreen(viewModel::onSplashFinished)
-                AppScreen.Login -> LoginScreen(
-                    email = "", // loginState.email,
-                    password = "", // loginState.password,
-                    isLoading = false, // loginState.isLoading,
-                    errorMessage = null, // loginState.errorMessage,
-                    onEmailChange = { /* rootComponent.loginStore.dispatch(LoginIntent.UpdateEmail(it)) */ },
-                    onPasswordChange = {
-                        /* rootComponent.loginStore.dispatch(
-                            LoginIntent.UpdatePassword(
-                                it
-                            )
-                        ) */
+                AppScreen.Login -> PhoneAuthScreen(
+                    viewModel = phoneAuthViewModel,
+                    onNavigateToHome = {
+                        viewModel.setCurrentUser(phoneAuthViewModel.state.value.userSession)
+                        viewModel.navigateTo(AppScreen.Home)
                     },
-                    onLogin = { /* rootComponent.loginStore.dispatch(LoginIntent.Submit) */ }
+                    onNavigateToStaff = {
+                        viewModel.setCurrentUser(phoneAuthViewModel.state.value.userSession)
+                        viewModel.navigateTo(AppScreen.Dashboard)
+                    },
+                    onNavigateToAdmin = { /* Navigate to admin panel */ }
                 )
-
                 AppScreen.Home -> HomeScreen(
                     restaurants = uiState.restaurants,
                     onRestaurantClick = viewModel::openRestaurantDetails
                 )
-
                 AppScreen.Dashboard -> DashboardScreen(
                     state = uiState,
                     ownedRestaurants = viewModel.getOwnedRestaurants(),
@@ -104,7 +99,6 @@ fun ServeHubApp(
                     onManageMenu = viewModel::openMenuManagement,
                     onCreateRestaurant = viewModel::openCreateRestaurant
                 )
-
                 is AppScreen.Details -> DetailsScreen(
                     restaurant = viewModel.getRestaurant(currentScreen.restaurantId),
                     cartState = uiState,
@@ -112,7 +106,6 @@ fun ServeHubApp(
                         viewModel.addToCart(currentScreen.restaurantId, menuItem)
                     }
                 )
-
                 AppScreen.Cart -> CartScreen(
                     state = uiState,
                     restaurants = uiState.restaurants,
@@ -121,18 +114,15 @@ fun ServeHubApp(
                     },
                     onCall = { /* phoneDialer.dial(it) */ }
                 )
-
                 AppScreen.CreateRestaurant -> CreateRestaurantScreen(
                     onCreate = viewModel::createRestaurant
                 )
-
                 is AppScreen.MenuManagement -> MenuManagementScreen(
                     restaurant = viewModel.getRestaurant(currentScreen.restaurantId),
                     userRole = uiState.currentUser?.role,
                     onAddItem = { viewModel.openAddMenuItem(currentScreen.restaurantId) },
                     onDeleteItem = { viewModel.deleteMenuItem(currentScreen.restaurantId, it) }
                 )
-
                 is AppScreen.AddMenuItem -> AddMenuItemScreen(
                     restaurant = viewModel.getRestaurant(currentScreen.restaurantId),
                     onAdd = { name, price ->

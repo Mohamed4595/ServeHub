@@ -40,7 +40,7 @@ class FirebaseRestaurantRepository(private val firestore: FirebaseFirestore) :
             cuisine = cuisine.trim(),
             phoneNumber = phoneNumber.trim(),
             ownerId = owner.id,
-            ownerEmail = owner.email,
+            ownerEmail = owner.email ?: "",
             menu = emptyList()
         )
         val data = mapOf(
